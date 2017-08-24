@@ -37,7 +37,13 @@ class mevent:
 			return False
 		return True
 
-wb = load_workbook('MouseInformation_AllLines_copy.xlsx')
+setup = 'setup.txt'
+
+sr = open(setup,'r')
+filenames = sr.read().split('\n')
+sr.close()
+
+
 
 def getCol(s,t):
 	for cell in s[1]:
@@ -58,23 +64,27 @@ def eventsfcol(des,lid,dates):
 
 
 
+
 local = []
 
-for ws in wb:
-	if getCol(ws,'Dissection Date') is not 0 and getCol(ws, 'Litter ID') is not 0:
-		disevents = eventsfcol('Dissect',ws[getCol(ws,'Litter ID')], ws[getCol(ws,'Dissection Date')])
-		for event in disevents:
-			local.append(event)
+for filename in filenames
 
-	if getCol(ws,'Wean') is not 0 and getCol(ws, 'Litter ID') is not 0:
-		winevents = eventsfcol('Wean',ws[getCol(ws,'Litter ID')], ws[getCol(ws,'Wean')])
-		for event in winevents:
-			local.append(event)
+	wb = load_workbook(filename)
+	for ws in wb:
+		if getCol(ws,'Dissection Date') is not 0 and getCol(ws, 'Litter ID') is not 0:
+			disevents = eventsfcol('Dissect',ws[getCol(ws,'Litter ID')], ws[getCol(ws,'Dissection Date')])
+			for event in disevents:
+				local.append(event)
 
-	if getCol(ws,'Tattoo') is not 0 and getCol(ws, 'Litter ID') is not 0:
-		tatevents = eventsfcol('Tattoo',ws[getCol(ws,'Litter ID')], ws[getCol(ws,'Tattoo')])
-		for event in tatevents:
-			local.append(event)
+		if getCol(ws,'Wean') is not 0 and getCol(ws, 'Litter ID') is not 0:
+			winevents = eventsfcol('Wean',ws[getCol(ws,'Litter ID')], ws[getCol(ws,'Wean')])
+			for event in winevents:
+				local.append(event)
+
+		if getCol(ws,'Tattoo') is not 0 and getCol(ws, 'Litter ID') is not 0:
+			tatevents = eventsfcol('Tattoo',ws[getCol(ws,'Litter ID')], ws[getCol(ws,'Tattoo')])
+			for event in tatevents:
+				local.append(event)
 
 
 #=====================================================================================================================================================================
